@@ -21,7 +21,7 @@ print(Omega.shape)
 Y = X@Omega
 print("Y shape")
 print(Y.shape)
-Q,R = np.linalg.qr(Y,mode='reduced')
+Q,R = np.linalg.qr(Y, mode='reduced')
 print("Q shape")
 print(Q.shape)
 
@@ -33,7 +33,7 @@ Q_transpose = np.transpose(Q)
 B = Q_transpose@X
 print("B shape")
 print(B.shape)
-U_hat,sum_hat,v_hat = np.linalg.svd(B, full_matrices=True)
+U_hat,sum_hat,v_hat = np.linalg.svd(B, full_matrices=False)
 print("U hat shape")
 print(U_hat.shape)
 U = Q@U_hat

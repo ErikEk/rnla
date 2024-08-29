@@ -12,10 +12,11 @@ import sklearn.preprocessing
 iris = sklearn.datasets.load_iris()
 
 X = iris.data #np.random.normal(loc=0.0, scale=1.0, size=(100,50))
+print(X.shape)
 M, N = X.shape
-K = 10
+K = 3
 Omega = np.random.normal(loc=0.0, scale=1.0, size=(N,K))
-
+print(Omega.shape)
 Y = np.dot(X, Omega)
 print(Y.shape)
 Q,R = np.linalg.qr(Y,mode='reduced')
@@ -25,14 +26,20 @@ print(K)
 print(M)
 print(N)
 print("ss")
-
-B = np.transpose(Q).dot(X)
-
+Q_transpose = np.transpose(Q)
+B = Q_transpose@X
+print(B.shape)
 U_hat,sum_hat,v_hat = np.linalg.svd(B)
 print(U_hat.shape)
-U = Q.dot(U_hat)
+U = Q@U_hat
 
 print('matrix U has {} rows, {} columns\n'.format(*U.shape))
 print('here are the first 5 rows.')
 
 print('{}'.format(pd.DataFrame(U).head(5)))
+
+A = np.array([
+    [1,2,3],
+    [4,5,6]
+])
+print(A.shape)

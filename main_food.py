@@ -7,10 +7,17 @@ import pandas as pd
 import scipy.stats
 import sklearn.datasets
 import sklearn.preprocessing
+from pandas import read_csv
 
 iris = sklearn.datasets.load_iris()
 
-X = iris.data #np.random.normal(loc=0.0, scale=1.0, size=(100,50))
+#X = iris.data #np.random.normal(loc=0.0, scale=1.0, size=(100,50))
+X = read_csv('Food_contents_2024.csv')
+print(X.head(5))
+X[:] = X[:].astype(float)
+print(X)
+exit(0)
+
 print(X.shape)
 M, N = X.shape
 K = 3

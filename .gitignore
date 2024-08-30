@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Files
+Food_contents_2024.csv
+
 # C extensions
 *.so
 

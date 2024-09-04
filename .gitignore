@@ -5,6 +5,7 @@ __pycache__/
 
 # Files
 Food_contents_2024.csv
+Food_formatted.csv
 
 # C extensions
 *.so

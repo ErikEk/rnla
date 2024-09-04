@@ -10,13 +10,15 @@ import sklearn.preprocessing
 from pandas import read_csv
 
 iris = sklearn.datasets.load_iris()
-
+print(iris)
+exit(0)
 #X = iris.data #np.random.normal(loc=0.0, scale=1.0, size=(100,50))
 X = read_csv('Food_contents_2024.csv')
 print(X.head(5))
-X[:] = X[:].astype(float)
-print(X)
-exit(0)
+X = X.apply(pd.to_numeric, errors='coerce')
+print(X.head(5))
+X = X.fillna(0.0)
+X.to_csv("Food_formatted.csv")
 
 print(X.shape)
 M, N = X.shape
@@ -57,11 +59,11 @@ U_iris = U
 # Projecting the data onto the right singular vectors
 #P_iris = df_iris.to_numpy().dot(Vt_iris.T)
 
-idx_setosa = np.where(iris.target==0)[0]
+idx_setosa = np.where(X.columns=='Energy (kcal)')[0]
 setosa_x = U_iris[idx_setosa, 0]
 setosa_y = U_iris[idx_setosa, 1]
-idx_versicolor = np.where(iris.target==1)[0]
-idx_virginica = np.where(iris.target==2)[0]
+idx_versicolor = np.where(X.columns=='Protein (g)')[0]
+idx_virginica = np.where(X.columns=='Carbohydrate (g)')[0]
 print(setosa_x.shape)
 versicolor_x = U_iris[idx_versicolor, 0]
 versicolor_y = U_iris[idx_versicolor, 1]
@@ -97,3 +99,4 @@ plt.grid(alpha=0.6, zorder=1)
 ax.set_facecolor('0.98')
 plt.tight_layout()
 plt.show()
+print(X.columns)

@@ -8,13 +8,52 @@ import scipy.stats
 import sklearn.datasets
 import sklearn.preprocessing
 from pandas import read_csv
+from keras.datasets import mnist
+from matplotlib import pyplot as plt
+import numpy as np
 
-#iris = sklearn.datasets.load_iris()
-#print(iris)
+# Load in mnist
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+# Reshape to each image to a row vector and column vector
+x_train_rowvector = np.reshape(x_train, (-1, 28*28))
+x_train_colvector = np.copy(x_train_rowvector).T
+x_test_rowvector = np.reshape(x_test, (-1, 28*28))
+x_test_colvector = np.copy(x_test_rowvector).T
+# Take small sample of 2000 training images
+x_train_colvector_sample2000 = x_train_colvector[:, :2000]
+y_train_sample2000 = y_train[:2000]
+# Take small sample of 200 testing images
+x_test_colvector_sample200 = x_test_colvector[:, :200]
+y_test_sample200 = y_test[:200]
 
-#X = iris.data #np.random.normal(loc=0.0, scale=1.0, size=(100,50))
-X = read_csv('Food_contents_2024.csv')
-print(X.head(5))
+print(x_train.shape)
+print(x_test.shape)
+print(x_train_rowvector.shape)
+print(x_test_rowvector.shape)
+
+# Calculate u, s, v
+u, s, v = np.linalg.svd(x_train_colvector_sample2000, full_matrices=False)
+# Set all singular values greater than the first two to 0
+for i in range(2, s.shape[0]):
+    s[i] = 0
+# Calculate the reduced dimensions with svd
+svd_cords = np.diag(s) @ v
+
+svd_list= [0] * 10
+for i in range(10):
+    svd_list[i] = (svd_cords.T[y_train_sample2000 == i])
+
+COLORS = ["red", "blue", "green", "yellow", "darkviolet", 
+          "maroon", "greenyellow", "hotpink", "black", "cyan"]
+fig, ax = plt.subplots()
+for i in range(10):
+    # Get the pca array corresponding to the current label
+    svd_current_label = svd_list[i]
+    ax.scatter(svd_current_label[:, 0], svd_current_label[:, 1],
+               c=COLORS[i], label=str(i))
+
+ax.legend()
+plt.show()
 exit(0)
 X = X.apply(pd.to_numeric, errors='coerce')
 print(X.head(5))

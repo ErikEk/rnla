@@ -43,7 +43,7 @@ svd_list= [0] * 10
 for i in range(10):
     svd_list[i] = (svd_cords.T[y_train_sample2000 == i])
 
-COLORS = ["red", "blue", "green", "yellow", "darkviolet", 
+COLORS = ["red", "blue", "green", "yellow", "darkviolet",
           "maroon", "greenyellow", "hotpink", "black", "cyan"]
 fig, ax = plt.subplots()
 for i in range(10):
@@ -54,6 +54,23 @@ for i in range(10):
 
 ax.legend()
 plt.show()
+#https://github.com/DanielY1783/mnist_svd/blob/master/mnist.ipynb
+svd_mean_list = [0] * 10
+for i in range(10): 
+    svd_mean_list[i] = np.mean(svd_list[i], axis=0)
+
+COLORS = ["red", "blue", "green", "yellow", "darkviolet", 
+          "maroon", "greenyellow", "hotpink", "black", "cyan"]
+fig, ax = plt.subplots()
+for i in range(10):
+    # Get the pca array corresponding to the current label
+    svd_current_label = svd_mean_list[i]
+    ax.scatter(svd_current_label[0], svd_current_label[1],
+               c=COLORS[i], label=str(i))
+
+ax.legend()
+plt.show()
+
 exit(0)
 X = X.apply(pd.to_numeric, errors='coerce')
 print(X.head(5))

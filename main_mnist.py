@@ -39,19 +39,19 @@ for i in range(100, s.shape[0]):
     s[i] = 0
 # Calculate the reduced dimensions with svd
 svd_cords = np.diag(s) @ v
-
+# U[:x, :x] @ np.diag(S[:x, :x]) @ V[:x,:x]
 svd_image = u @ svd_cords
 print(svd_image.shape)
-
-
 
 image = x_train_colvector_sample2000[:,0]
 # Show singular image
 plt.imshow(image.reshape(28, 28), cmap="Greys")
+
 plt.show()
 plt.close()
 
 image = svd_image[:,0]
+print(image.reshape(28, 28))
 # Show singular image
 plt.imshow(image.reshape(28, 28), cmap="Greys")
 plt.show()

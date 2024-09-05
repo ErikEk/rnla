@@ -34,11 +34,29 @@ print(x_test_rowvector.shape)
 # Calculate u, s, v
 u, s, v = np.linalg.svd(x_train_colvector_sample2000, full_matrices=False)
 # Set all singular values greater than the first two to 0
-for i in range(2, s.shape[0]):
+#print(s.shape[0])
+for i in range(100, s.shape[0]):
     s[i] = 0
 # Calculate the reduced dimensions with svd
 svd_cords = np.diag(s) @ v
 
+svd_image = u @ svd_cords
+print(svd_image.shape)
+
+
+
+image = x_train_colvector_sample2000[:,0]
+# Show singular image
+plt.imshow(image.reshape(28, 28), cmap="Greys")
+plt.show()
+plt.close()
+
+image = svd_image[:,0]
+# Show singular image
+plt.imshow(image.reshape(28, 28), cmap="Greys")
+plt.show()
+plt.close()
+exit(0)
 svd_list= [0] * 10
 for i in range(10):
     svd_list[i] = svd_cords.T[y_train_sample2000 == i]

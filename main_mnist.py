@@ -41,7 +41,7 @@ svd_cords = np.diag(s) @ v
 
 svd_list= [0] * 10
 for i in range(10):
-    svd_list[i] = (svd_cords.T[y_train_sample2000 == i])
+    svd_list[i] = svd_cords.T[y_train_sample2000 == i]
 
 COLORS = ["red", "blue", "green", "yellow", "darkviolet",
           "maroon", "greenyellow", "hotpink", "black", "cyan"]
@@ -56,7 +56,7 @@ ax.legend()
 plt.show()
 #https://github.com/DanielY1783/mnist_svd/blob/master/mnist.ipynb
 svd_mean_list = [0] * 10
-for i in range(10): 
+for i in range(10):
     svd_mean_list[i] = np.mean(svd_list[i], axis=0)
 
 COLORS = ["red", "blue", "green", "yellow", "darkviolet", 

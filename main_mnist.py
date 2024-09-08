@@ -1,10 +1,6 @@
 import numpy as np
-import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
-import os
 import pandas as pd
-import scipy.stats
 import sklearn.datasets
 import sklearn.preprocessing
 from pandas import read_csv
@@ -13,7 +9,6 @@ from matplotlib import pyplot as plt
 import numpy as np
 import csv
 import time
-start = time.time()
 
 # Load in mnist
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
@@ -35,7 +30,7 @@ print(x_train_rowvector.shape)
 print(x_test_rowvector.shape)
 
 # RNLA
-done = time.time()
+start = time.time()
 X = x_train_colvector_sample2000
 print("X.shape")
 print(X.shape)
@@ -56,11 +51,13 @@ B = Q_transpose@X
 
 # Calculate u, s, v
 u, s, v = np.linalg.svd(X, full_matrices=False)
+done = time.time()
 elapsed = done - start
 print(elapsed)
 
-done = time.time()
+start = time.time()
 u_org, s_org, v_org = np.linalg.svd(X, full_matrices=False)
+done = time.time()
 elapsed = done - start
 print(elapsed)
 # Set all singular values greater than the first two to 0

@@ -11,6 +11,8 @@ from pandas import read_csv
 from keras.datasets import mnist
 from matplotlib import pyplot as plt
 import numpy as np
+import csv
+
 
 # Load in mnist
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
@@ -35,31 +37,23 @@ print(x_test_rowvector.shape)
 u, s, v = np.linalg.svd(x_train_colvector_sample2000, full_matrices=False)
 # Set all singular values greater than the first two to 0
 #print(s.shape[0])
-for i in range(100, s.shape[0]):
+for i in range(2, s.shape[0]):
     s[i] = 0
 # Calculate the reduced dimensions with svd
 svd_cords = np.diag(s) @ v
 # U[:x, :x] @ np.diag(S[:x, :x]) @ V[:x,:x]
 svd_image = u @ svd_cords
-print(svd_image.shape)
 
-image = x_train_colvector_sample2000[:,0]
-# Show singular image
-plt.imshow(image.reshape(28, 28), cmap="Greys")
-
-plt.show()
-plt.close()
-
-image = svd_image[:,0]
-print(image.reshape(28, 28))
-# Show singular image
-plt.imshow(image.reshape(28, 28), cmap="Greys")
-plt.show()
-plt.close()
-exit(0)
+print(svd_cords.shape)
+print(y_train_sample2000.shape)
 svd_list= [0] * 10
 for i in range(10):
     svd_list[i] = svd_cords.T[y_train_sample2000 == i]
+print(len(y_train_sample2000 == i))
+print(len(svd_list))
+with open('your_file.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerows(svd_list)
 
 COLORS = ["red", "blue", "green", "yellow", "darkviolet",
           "maroon", "greenyellow", "hotpink", "black", "cyan"]
@@ -175,3 +169,20 @@ ax.set_facecolor('0.98')
 plt.tight_layout()
 plt.show()
 print(X.columns)
+
+
+
+
+'''
+image = x_train_colvector_sample2000[:,0]
+# Show singular image
+plt.imshow(image.reshape(28, 28), cmap="Greys")
+plt.show()
+plt.close()
+
+image = svd_image[:,0]
+print(image.reshape(28, 28))
+# Show singular image
+plt.imshow(image.reshape(28, 28), cmap="Greys")
+plt.show()
+plt.close()'''

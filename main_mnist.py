@@ -12,7 +12,8 @@ from keras.datasets import mnist
 from matplotlib import pyplot as plt
 import numpy as np
 import csv
-
+import time
+start = time.time()
 
 # Load in mnist
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
@@ -33,8 +34,35 @@ print(x_test.shape)
 print(x_train_rowvector.shape)
 print(x_test_rowvector.shape)
 
+# RNLA
+done = time.time()
+X = x_train_colvector_sample2000
+print("X.shape")
+print(X.shape)
+M, N = X.shape
+K = 3
+Omega = np.random.normal(loc=0.0, scale=1.0, size=(N,K))
+print("Omega shape")
+print(Omega.shape)
+Y = X@Omega
+print("Y shape")
+print(Y.shape)
+Q,R = np.linalg.qr(Y, mode='reduced')
+print("Q shape")
+print(Q.shape)
+Q_transpose = np.transpose(Q)
+B = Q_transpose@X
+#x_train_colvector_sample2000 = B
+
 # Calculate u, s, v
-u, s, v = np.linalg.svd(x_train_colvector_sample2000, full_matrices=False)
+u, s, v = np.linalg.svd(X, full_matrices=False)
+elapsed = done - start
+print(elapsed)
+
+done = time.time()
+u_org, s_org, v_org = np.linalg.svd(X, full_matrices=False)
+elapsed = done - start
+print(elapsed)
 # Set all singular values greater than the first two to 0
 #print(s.shape[0])
 for i in range(2, s.shape[0]):

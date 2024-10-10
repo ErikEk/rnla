@@ -4,12 +4,14 @@ import pandas as pd
 import sklearn.datasets
 import sklearn.preprocessing
 from pandas import read_csv
+import matplotlib
 from matplotlib import pyplot as plt
 import numpy as np
 import csv
 import time
 import pickle
-#matplotlib.use('Agg')
+matplotlib.use("TkAgg")
+
 '''
 # RNLA
 start = time.time()

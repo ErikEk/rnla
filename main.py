@@ -1,5 +1,4 @@
 import numpy as np
-import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 import os
@@ -7,7 +6,7 @@ import pandas as pd
 import scipy.stats
 import sklearn.datasets
 import sklearn.preprocessing
-
+matplotlib.use("TkAgg")
 iris = sklearn.datasets.load_iris()
 
 X = iris.data #np.random.normal(loc=0.0, scale=1.0, size=(100,50))

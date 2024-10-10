@@ -9,7 +9,7 @@ import numpy as np
 import csv
 import time
 import pickle
-
+#matplotlib.use('Agg')
 '''
 # RNLA
 start = time.time()

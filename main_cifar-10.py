@@ -13,6 +13,65 @@ import pickle
 matplotlib.use("TkAgg")
 
 '''
+'''
+def plotimage(batch1, image_index):
+    print(type(batch1))
+    print(batch1[b'data'][0])
+    print(batch1[b'data'][0].shape)
+
+    # Separate RGB lists (values between 0 and 255)
+    r_values = batch1[b'data'][image_index][0:1024]
+    print(r_values.shape)
+    g_values = batch1[b'data'][image_index][1024:1024*2]
+    print(g_values.shape)
+    b_values = batch1[b'data'][image_index][1024*2:]
+    print(b_values.shape)
+
+    # Normalize the RGB values to the range [0, 1]
+    r_normalized = [r / 255 for r in r_values]
+    g_normalized = [g / 255 for g in g_values]
+    b_normalized = [b / 255 for b in b_values]
+
+    # Combine the normalized RGB values into a 1xN array where N is the number of colors
+    colors = np.array([list(zip(r_normalized, g_normalized, b_normalized))]).reshape(32,32,3)
+    print(colors.shape)
+    # Use imshow to plot the array of colors
+    plt.imshow(colors, aspect='auto')
+
+    # Hide the axes and display the plot
+    plt.gca().set_axis_off()
+    plt.show()
+
+    # Show singular image
+    plt.imshow(image.reshape(32, 32, 3), cmap="Greys")
+    plt.show()
+    plt.close()
+
+def unpickle(file):
+    with open(file, 'rb') as fo:
+        dict = pickle.load(fo, encoding='bytes')
+    return dict
+
+batch1 = unpickle("cifar-10-batches-py/data_batch_1")
+test_batch = unpickle("cifar-10-batches-py/test_batch")
+
+image = batch1[b'data'][0][0:]
+x_train = batch1[b'data'][:][0:]
+y_train = np.array(test_batch[b'labels'][:][0:])
+print(x_train.shape)
+print(image.shape)
+
+plotimage(batch1, 2)
+
+
+x_train_rowvector = np.reshape(x_train, (-1, 32*32))
+x_train_colvector = np.copy(x_train_rowvector).T
+#x_test_rowvector = np.reshape(x_test, (-1, 28*28))
+#x_test_colvector = np.copy(x_test_rowvector).T
+# Take small sample of 2000 training images
+x_train_colvector_sample2000 = x_train_colvector[:, :2000]
+y_train_sample2000 = y_train[:2000]
+
 # RNLA
 start = time.time()
 X = x_train_colvector_sample2000
@@ -39,50 +98,7 @@ print(B.shape)
 u, s, v = np.linalg.svd(X, full_matrices=False)
 done = time.time()
 elapsed = done - start
-print(f"Time elapsed for random projected matrix: {elapsed}")'''
-
-def unpickle(file):
-    with open(file, 'rb') as fo:
-        dict = pickle.load(fo, encoding='bytes')
-    return dict
-
-batch1 = unpickle("cifar-10-batches-py/data_batch_1")
-print(type(batch1))
-print(batch1[b'data'][0])
-print(batch1[b'data'][0].shape)
-image = batch1[b'data'][0][0:]
-print(image.shape)
-
-image_index = 2
-# Separate RGB lists (values between 0 and 255)
-r_values = batch1[b'data'][image_index][0:1024]
-print(r_values.shape)
-g_values = batch1[b'data'][image_index][1024:1024*2]
-print(g_values.shape)
-b_values = batch1[b'data'][image_index][1024*2:]
-print(b_values.shape)
-
-# Normalize the RGB values to the range [0, 1]
-r_normalized = [r / 255 for r in r_values]
-g_normalized = [g / 255 for g in g_values]
-b_normalized = [b / 255 for b in b_values]
-
-# Combine the normalized RGB values into a 1xN array where N is the number of colors
-colors = np.array([list(zip(r_normalized, g_normalized, b_normalized))]).reshape(32,32,3)
-print(colors.shape)
-# Use imshow to plot the array of colors
-plt.imshow(colors, aspect='auto')
-
-# Hide the axes and display the plot
-plt.gca().set_axis_off()
-plt.show()
-exit(0)
-
-# Show singular image
-plt.imshow(image.reshape(32, 32, 3), cmap="Greys")
-plt.show()
-plt.close()
-
+print(f"Time elapsed for random projected matrix: {elapsed}")
 
 start = time.time()
 u_org, s_org, v_org = np.linalg.svd(x_train_colvector_sample2000, full_matrices=False)

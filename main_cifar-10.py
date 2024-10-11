@@ -59,8 +59,6 @@ y_train = np.array(test_batch[b'labels'][:][0:])
 print(x_train.shape)
 print(image.shape)
 
-plotimage(batch1, 2)
-
 
 x_train_rowvector = np.reshape(x_train, (-1, 32*32))
 x_train_colvector = np.copy(x_train_rowvector).T

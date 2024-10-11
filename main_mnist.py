@@ -5,10 +5,12 @@ import sklearn.datasets
 import sklearn.preprocessing
 from pandas import read_csv
 from keras.datasets import mnist
+import matplotlib
 from matplotlib import pyplot as plt
 import numpy as np
 import csv
 import time
+matplotlib.use("TkAgg")
 
 # Load in mnist
 (x_train, y_train), (x_test, y_test) = mnist.load_data()

@@ -41,9 +41,9 @@ def plotimage(batch1, image_index):
     plt.show()
 
     # Show singular image
-    plt.imshow(image.reshape(32, 32, 3), cmap="Greys")
-    plt.show()
-    plt.close()
+    #plt.imshow(image.reshape(32, 32, 3), cmap="Greys")
+    #plt.show()
+    #plt.close()
 
 def unpickle(file):
     with open(file, 'rb') as fo:
@@ -69,7 +69,15 @@ x_train_colvector_sample2000 = x_train_colvector[:, :2000]
 y_train_sample2000 = y_train[:2000]
 
 # Plot image
-#plotimage(batch1, 1)
+plotimage(batch1, 0)
+
+# Original LA
+start = time.time()
+u_org, s_org, v_org = np.linalg.svd(x_train_colvector_sample2000, full_matrices=False)
+done = time.time()
+elapsed = done - start
+print(f"Time elapsed for original matrix: {elapsed}")
+
 
 # RNLA
 start = time.time()
@@ -99,11 +107,17 @@ done = time.time()
 elapsed = done - start
 print(f"Time elapsed for random projected matrix: {elapsed}")
 
-start = time.time()
-u_org, s_org, v_org = np.linalg.svd(x_train_colvector_sample2000, full_matrices=False)
-done = time.time()
-elapsed = done - start
-print(f"Time elapsed for original matrix: {elapsed}")
+
+
+# Plot image
+svd_image = Q@u
+image = svd_image[:,0]
+print(image.reshape(32, 32))
+# Show singular image
+plt.imshow(image.reshape(32, 32), cmap="Greys")
+plt.show()
+plt.close()
+
 # Set all singular values greater than the first two to 0
 #print(s.shape[0])
 for i in range(2, s.shape[0]):
@@ -112,6 +126,8 @@ for i in range(2, s.shape[0]):
 svd_cords = np.diag(s) @ v
 # U[:x, :x] @ np.diag(S[:x, :x]) @ V[:x,:x]
 svd_image = u @ svd_cords
+
+
 
 print(svd_cords.shape)
 print(y_train_sample2000.shape)

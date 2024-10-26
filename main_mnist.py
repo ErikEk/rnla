@@ -54,7 +54,7 @@ print(B.shape)
 #x_train_colvector_sample2000 = B
 
 # Calculate u, s, v
-u, s, v = np.linalg.svd(X, full_matrices=False)
+u, s, v = np.linalg.svd(B, full_matrices=False)
 done = time.time()
 elapsed = done - start
 print(f"Time elapsed for random projected matrix: {elapsed}")

@@ -68,6 +68,9 @@ x_train_colvector = np.copy(x_train_rowvector).T
 x_train_colvector_sample2000 = x_train_colvector[:, :2000]
 y_train_sample2000 = y_train[:2000]
 
+# Plot image
+#plotimage(batch1, 1)
+
 # RNLA
 start = time.time()
 X = x_train_colvector_sample2000
@@ -91,7 +94,7 @@ print(B.shape)
 #x_train_colvector_sample2000 = B
 
 # Calculate u, s, v
-u, s, v = np.linalg.svd(X, full_matrices=False)
+u, s, v = np.linalg.svd(B, full_matrices=False)
 done = time.time()
 elapsed = done - start
 print(f"Time elapsed for random projected matrix: {elapsed}")

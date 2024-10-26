@@ -37,7 +37,7 @@ X = x_train_colvector_sample2000
 print("X.shape")
 print(X.shape)
 M, N = X.shape
-K = 1000
+K = 100
 Omega = np.random.normal(loc=0.0, scale=1.0, size=(N,K))
 print("Omega shape")
 print(Omega.shape)

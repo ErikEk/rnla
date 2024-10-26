@@ -115,7 +115,7 @@ ax.legend()
 plt.show()
 
 
-'''
+
 image = x_train_colvector_sample2000[:,0]
 # Show singular image
 plt.imshow(image.reshape(28, 28), cmap="Greys")
@@ -123,13 +123,9 @@ plt.show()
 
 
 #image = svd_image[:,0]
+#kk = Q@u
 test_svd = u_org @ np.diag(s_org) @ v_org
 image =  test_svd[:,0]
 # Show singular image
 plt.imshow(image.reshape(28, 28), cmap="Greys")
-plt.show()'''
-
-
-
-
-
+plt.show()

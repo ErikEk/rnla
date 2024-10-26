@@ -108,7 +108,6 @@ elapsed = done - start
 print(f"Time elapsed for random projected matrix: {elapsed}")
 
 
-
 # Plot image
 svd_image = Q@u
 image = svd_image[:,0]
@@ -126,7 +125,6 @@ for i in range(2, s.shape[0]):
 svd_cords = np.diag(s) @ v
 # U[:x, :x] @ np.diag(S[:x, :x]) @ V[:x,:x]
 svd_image = u @ svd_cords
-
 
 
 print(svd_cords.shape)

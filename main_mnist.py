@@ -52,6 +52,7 @@ B = Q_transpose@X
 print("B.shape")
 print(B.shape)
 
+
 # Calculate u, s, v
 u, s, v = np.linalg.svd(B, full_matrices=False)
 done = time.time()
